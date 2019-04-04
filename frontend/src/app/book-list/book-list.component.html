@@ -1,0 +1,73 @@
+<div class="form-wrapper">
+  <form class="form">
+    <div>
+      <mat-form-field class="select">
+        <mat-label>User Country</mat-label>
+        <mat-select (selectionChange)="selectCountry($event.value);">
+          <mat-option *ngFor="let country of countries" [value]="country">
+            {{country.countryName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="User Age" (input)="setAge($event)" type="number">
+      </mat-form-field>
+      <div>
+        <button (click)="submit($event)" mat-raised-button color="primary"
+                class="form-submit-button"
+                >Get
+          filtered
+          results</button>
+      </div>
+    </div>
+  </form>
+  <div class="top-rating-buttons">
+    <button (click)="getTopRatedBooks(10)" mat-raised-button color="primary">Top 10</button>
+    <button (click)="getTopRatedBooks(50)" mat-raised-button color="primary">Top 50</button>
+    <button (click)="getTopRatedBooks(100)" mat-raised-button color="primary">Top 100</button>
+  </div>
+</div>
+<div>
+  <mat-list *ngFor="let book of books" class="mdc-theme--secondary-bg">
+      <mat-card>
+        <div class="book-info">
+          <mat-card-content>
+            <img mat-card-sm-image
+                 src="{{book.imageURL}}">
+            <mat-card-header>
+              <mat-card-title>
+                {{book.bookTitle}}
+              </mat-card-title>
+            </mat-card-header>
+            <div mat-line> {{book.isbn}} </div>
+            <div mat-line> {{book.bookAuthor}} </div>
+            <div mat-line> {{book.yearOfPublication}} </div>
+          </mat-card-content>
+          <mat-card-content>
+            <div class="book-rating">
+              <div>
+                <div class="average">Average rating:</div>
+                <div class="rating">{{book.bookRating.toFixed(2)}}</div>
+              </div>
+              <div class="rate-btn">
+                  <button *ngFor="let v of [].constructor(10); index as i" mat-mini-fab color="primary" (click) =
+                    "giveRating(i+1, book.isbn)" value="{{i+1}}" class="button"><div>{{i+1}}</div></button>
+              </div>
+              <div *ngIf="book.userRating">
+                <div class="average">You have rated this book:</div>
+                <div class="rating">{{book.userRating}}</div>
+              </div>
+            </div>
+          </mat-card-content>
+        </div>
+      </mat-card>
+    </mat-list>
+  <mat-progress-bar mode="indeterminate" *ngIf="!loaded"></mat-progress-bar>
+    <mat-paginator [length]="length"
+                   [pageSize]="pageSize"
+                   [pageIndex]="pageIndex"
+                   [pageSizeOptions]="[10]"
+                   (page)="pageEvent = setPage($event)"
+                   id="paginator">
+    </mat-paginator>
+</div>
