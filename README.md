@@ -25,7 +25,7 @@ Run fronend (For that Node.js should be installed):
 
 In terminal 
 cd Imdb/frontend
-npm init > installs all dependencies frontend needs to serve the app
+npm install > installs all dependencies frontend needs to serve the app
 In the same directive type
 ng serve
 Frontend runs on http://localhost:4200/
